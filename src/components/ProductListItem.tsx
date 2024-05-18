@@ -1,10 +1,11 @@
-import { View, Image, Text, StyleSheet, Pressable } from 'react-native';
-import Colors from '../constants/Colors';
-import { Product } from '../types';
-import { router } from 'expo-router';
+import { View, Image, Text, StyleSheet, Pressable } from "react-native";
+import Colors from "../constants/Colors";
+import { Product } from "../types";
+import { router } from "expo-router";
+import React from "react";
 
 export const defaultPizzaImage =
-  'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
+  "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
 
 type ProductListItemProps = {
   product: Product;
@@ -15,8 +16,9 @@ export default function ProductListItem({ product }: ProductListItemProps) {
     <Pressable
       style={styles.container}
       onPress={() => {
-        router.push(`/${product.id}`);
-      }}>
+        router.push(`/menu/${product.id}`);
+      }}
+    >
       <Image
         source={{ uri: product.image || defaultPizzaImage }}
         style={styles.image}
@@ -30,23 +32,23 @@ export default function ProductListItem({ product }: ProductListItemProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 20,
-    maxWidth: '50%',
+    maxWidth: "50%",
   },
   title: {
-    color: 'black',
+    color: "black",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
   },
   price: {
     color: Colors.light.tint,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   image: {
-    width: '100%',
+    width: "100%",
     aspectRatio: 1,
   },
 });
