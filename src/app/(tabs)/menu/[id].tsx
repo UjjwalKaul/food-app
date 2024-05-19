@@ -1,17 +1,24 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import products from "@assets/data/products";
 import { defaultPizzaImage } from "@components/ProductListItem";
+import Button from "@components/Button";
+
 const sizes = ["S", "M", "L", "XL"];
 
 export default function ProductDetailScreen() {
+  const [selectedSize, setSelectedSize] = useState("M");
   const { id } = useLocalSearchParams();
   const product = products.find((p) => {
     return p.id.toString() === id;
   });
   if (!product) {
     return <Text>Product not found</Text>;
+  }
+
+  function AddToCart() {
+    console.log("Added to cart");
   }
   return (
     <View style={styles.container}>
@@ -24,14 +31,35 @@ export default function ProductDetailScreen() {
       <View style={styles.sizes}>
         {sizes.map((size) => {
           return (
-            <View style={styles.size} key={size}>
-              <Text style={styles.sizeText}>{size}</Text>
-            </View>
+            <Pressable
+              onPress={() => {
+                setSelectedSize(size);
+              }}
+              style={[
+                styles.size,
+                {
+                  backgroundColor:
+                    selectedSize === size ? "gainsboro" : "white",
+                },
+              ]}
+              key={size}
+            >
+              <Text
+                style={[
+                  styles.sizeText,
+                  {
+                    color: selectedSize === size ? "black" : "grey",
+                  },
+                ]}
+              >
+                {size}
+              </Text>
+            </Pressable>
           );
         })}
       </View>
-
-      <Text style={styles.price}>₹{product.price}</Text>
+      <Text style={styles.price}>Price: ₹{product.price}</Text>
+      <Button text="Add to cart" onPress={AddToCart} />
     </View>
   );
 }
@@ -47,6 +75,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   price: {
+    marginTop: "auto",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -64,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   sizeText: {
-    fontWeight: 800,
+    fontWeight: 700,
     fontSize: 20,
   },
 });
