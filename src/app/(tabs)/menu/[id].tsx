@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React, { useState } from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import products from "@assets/data/products";
 import { defaultPizzaImage } from "@components/ProductListItem";
 import Button from "@components/Button";
@@ -25,6 +25,7 @@ export default function ProductDetailScreen() {
       return;
     }
     addItem(product, selectedSize);
+    router.push("cart");
   }
   return (
     <View style={styles.container}>
