@@ -22,7 +22,7 @@ export default function OrderDetailsScreen() {
           return <OrderItemListItem item={item} />;
         }}
         contentContainerStyle={{ gap: 10 }}
-        ListFooterComponent={() => {
+        ListHeaderComponent={() => {
           return <OrderListItem order={order} />;
         }}
       />
