@@ -6,6 +6,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 export default function OrderDetailsScreen() {
+  console.log('rendered');
   const { id } = useLocalSearchParams();
   const order = orders.find((o) => {
     return o.id.toString() === id;
