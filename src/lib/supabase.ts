@@ -9,7 +9,7 @@ const ExpoSecureStoreAdapter = {
   setItem: (key: string, value: string) => {
     SecureStore.setItemAsync(key, value);
   },
-  removeItm: (key: string) => {
+  removeItem: (key: string) => {
     SecureStore.deleteItemAsync(key);
   },
 };
