@@ -4,7 +4,8 @@ import Button from '@components/Button';
 import { defaultPizzaImage } from '@components/ProductListItem';
 import Colors from '@/constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useInsertProduct } from '@/api/products';
 export default function CreateProductScreen() {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -13,6 +14,10 @@ export default function CreateProductScreen() {
 
   const { id } = useLocalSearchParams();
   const isUpdating = !!id;
+
+  const { mutate: insertProduct } = useInsertProduct();
+  const router = useRouter();
+
   function validateInputs() {
     if (!name) {
       setErrors('Name is required');
@@ -29,15 +34,25 @@ export default function CreateProductScreen() {
     return true;
   }
 
+  function resetFields() {
+    setName('');
+    setPrice('');
+    setErrors('');
+  }
   function onCreate() {
     if (!validateInputs()) {
       return;
     }
-    console.warn('Creating product', name, price);
     //Save in db
-    setName('');
-    setPrice('');
-    setErrors('');
+    insertProduct(
+      { name, price: parseFloat(price), image },
+      {
+        onSuccess: () => {
+          resetFields();
+          router.back();
+        },
+      }
+    );
   }
   function onUpdate() {
     if (!validateInputs()) {
@@ -45,9 +60,7 @@ export default function CreateProductScreen() {
     }
     console.warn('Updating product', name, price);
     //Save in db
-    setName('');
-    setPrice('');
-    setErrors('');
+    resetFields();
   }
 
   function onSubmit() {
