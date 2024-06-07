@@ -1,6 +1,6 @@
-import { View, Image, Text, StyleSheet, Pressable } from 'react-native';
+import { Image, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from '../constants/Colors';
-import { Product } from '../types';
+import { Product, Tables } from '../types';
 import { router, useSegments } from 'expo-router';
 import React from 'react';
 
@@ -8,7 +8,7 @@ export const defaultPizzaImage =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
 
 type ProductListItemProps = {
-  product: Product;
+  product: Tables<'products'>;
 };
 
 export default function ProductListItem({ product }: ProductListItemProps) {
