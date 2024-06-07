@@ -5,12 +5,18 @@ import { defaultPizzaImage } from '@components/ProductListItem';
 import Colors from '@/constants/Colors';
 import * as ImagePicker from 'expo-image-picker';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useInsertProduct, useProduct, useUpdateProduct } from '@/api/products';
+import {
+  useDeleteProduct,
+  useInsertProduct,
+  useProduct,
+  useUpdateProduct,
+} from '@/api/products';
 export default function CreateProductScreen() {
   const [image, setImage] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [errors, setErrors] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const { id: idString = '' } = useLocalSearchParams();
   const id = parseFloat(
@@ -22,6 +28,7 @@ export default function CreateProductScreen() {
   const { mutate: insertProduct } = useInsertProduct();
   const { mutate: updateProduct } = useUpdateProduct();
   const { data: updatingProduct } = useProduct(id);
+  const { mutate: deleteProduct } = useDeleteProduct();
   const router = useRouter();
 
   useEffect(() => {
@@ -90,6 +97,7 @@ export default function CreateProductScreen() {
   }
 
   function onSubmit() {
+    setLoading(!loading);
     if (isUpdating) {
       onUpdate();
     } else {
@@ -110,7 +118,12 @@ export default function CreateProductScreen() {
     }
   };
   function onDelete() {
-    console.log('DELETE');
+    deleteProduct(id, {
+      onSuccess: () => {
+        resetFields();
+        router.replace('/(admin)');
+      },
+    });
   }
   function confirmDelete() {
     Alert.alert(
@@ -157,7 +170,11 @@ export default function CreateProductScreen() {
         style={styles.input}
       />
       <Text style={{ color: 'red' }}>{errors}</Text>
-      <Button onPress={onSubmit} text={isUpdating ? 'Update ' : 'Create '} />
+      <Button
+        disabled={loading}
+        onPress={onSubmit}
+        text={isUpdating ? 'Update ' : 'Create '}
+      />
       {isUpdating && (
         <Text onPress={confirmDelete} style={styles.textButton}>
           Delete

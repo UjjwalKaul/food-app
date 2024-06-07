@@ -89,9 +89,8 @@ export function useDeleteProduct() {
         throw new Error(error.message);
       }
     },
-    async onSuccess(_, id) {
+    async onSuccess() {
       await queryClient.invalidateQueries({ queryKey: ['products'] });
-      await queryClient.invalidateQueries({ queryKey: ['products', id] });
     },
   });
 }
