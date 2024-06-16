@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 export default function useProductList() {
   return useQuery({
     queryKey: ['products'],
