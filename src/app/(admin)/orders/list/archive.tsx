@@ -1,8 +1,7 @@
 import { FlatList, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import React from 'react';
-import orders from '@assets/data/orders';
 import OrderListItem from '@components/OrderListItem';
-import useAdminOrderList from '@/api/products/orders';
+import useAdminOrderList from '@/api/orders';
 export default function OrdersScreens() {
   const {
     data: orders,

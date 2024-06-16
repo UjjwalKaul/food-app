@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import OrderListItem from '@components/OrderListItem';
-import { useMyOrderList } from '@/api/products/orders';
+import { useMyOrderList } from '@/api/orders';
 
 export default function OrdersScreens() {
   const { data: orders, isLoading, error } = useMyOrderList();
