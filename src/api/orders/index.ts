@@ -71,8 +71,8 @@ export function useInsertOrder() {
       }
       return newProduct;
     },
-    async onSuccess(data) {
-      await queryClient.invalidateQueries({ queryKey: ['products'] });
+    async onSuccess() {
+      await queryClient.invalidateQueries({ queryKey: ['orders'] });
     },
   });
 }
