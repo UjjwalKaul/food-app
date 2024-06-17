@@ -26,7 +26,7 @@ export default function OrderDetailsScreen() {
   if (isLoading) {
     return <ActivityIndicator />;
   }
-  if (error) {
+  if (error || !order) {
     return <Text>Failed to fetch products</Text>;
   }
   return (
