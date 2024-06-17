@@ -79,17 +79,17 @@ export default function CreateProductScreen() {
       }
     );
   }
-  function onUpdate() {
+  async function onUpdate() {
     if (!validateInputs()) {
       return;
     }
-
+    const imagePath = await uploadImage();
     //Save in db
     updateProduct(
       {
         id,
         name,
-        image,
+        image: imagePath,
         price: parseFloat(price),
       },
       {
