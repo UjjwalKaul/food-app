@@ -1,9 +1,9 @@
 import { Image, Text, StyleSheet, Pressable } from 'react-native';
 import Colors from '../constants/Colors';
-import { Product, Tables } from '../types';
+import { Tables } from '../types';
 import { router, useSegments } from 'expo-router';
 import React from 'react';
-
+import RemoteImage from './RemoteImage';
 export const defaultPizzaImage =
   'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
 
@@ -19,8 +19,9 @@ export default function ProductListItem({ product }: ProductListItemProps) {
       onPress={() => {
         router.push(`/${segments[0]}/menu/${product.id}`);
       }}>
-      <Image
-        source={{ uri: product.image || defaultPizzaImage }}
+      <RemoteImage
+        path={product.image}
+        fallback={defaultPizzaImage}
         style={styles.image}
         resizeMode="contain"
       />
