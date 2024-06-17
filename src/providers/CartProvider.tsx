@@ -92,7 +92,6 @@ export default function CartProvider({ children }: PropsWithChildren) {
     });
     insertOrderItems(orderItems, {
       onSuccess() {
-        console.log('Inside');
         clearCart();
         router.push(`/(user)/orders/${order.id}`);
       },
